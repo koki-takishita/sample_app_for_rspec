@@ -1,10 +1,22 @@
 require 'rails_helper'
 
 RSpec.feature "Users", type: :feature do
+  let(:user) { create(:user) }
   describe 'ログイン前' do
     describe 'ユーザー新規登録' do
       context 'フォームの入力値が正常' do
-        it 'ユーザーの新規作成が成功する'
+        it 'ユーザーの新規作成が成功する' do
+          visit root_path
+          click_link 'SignUp'
+          #byebug
+          fill_in 'Email', with: user.email
+          fill_in 'Password', with: user.password
+          fill_in 'Password confirmation', with: user.password
+          click_button 'SignUp'
+          #expect(response).to redirect_to 'login_path'
+          #save_and_open_page
+          expect(page).to have_content 'User was successfully created.'
+        end
       end
       context 'メールアドレスが未入力' do
         it 'ユーザーの新規作成が失敗する'
