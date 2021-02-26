@@ -18,6 +18,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'capybara', '~> 3.35', '>= 3.35.3'
   gem 'launchy', '~> 2.5'
+  gem 'webdrivers', '~> 4.5'
 end
 
 group :development do
