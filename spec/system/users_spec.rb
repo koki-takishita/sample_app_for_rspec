@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "Users", type: :feature do
+RSpec.feature "Users", type: :system do
   describe 'ログイン前' do
     let(:user) { build(:user) }
     # 登録済みのメールアドレスが必要なため

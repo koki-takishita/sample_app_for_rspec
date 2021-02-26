@@ -1,7 +1,7 @@
 # spec/rails_helper読み込み→raile_helper内Dir[Rails.root.join~~ spec/support以下読み込み
 require 'rails_helper'
 
-RSpec.feature "UserSessions", type: :feature do
+RSpec.feature "UserSessions", type: :system do
   describe 'ログイン前' do
     let(:user) { create(:user)}
 
