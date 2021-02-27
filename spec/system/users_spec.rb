@@ -1,4 +1,5 @@
 require 'rails_helper'
+#:focus => true
 
 RSpec.feature "Users", type: :system do
   describe 'ログイン前' do
@@ -19,6 +20,7 @@ RSpec.feature "Users", type: :system do
           click_button 'SignUp'
           # expect(response).to redirect_to 'login_path'
           expect(page).to have_content 'User was successfully created.'
+          expect(page).to have_selector 'h1', text: 'Login' 
         end
       end
       context 'メールアドレスが未入力' do
@@ -93,6 +95,8 @@ RSpec.feature "Users", type: :system do
          select new_task.status, from: 'Status'
          click_button 'Create Task'
          expect(page).to have_content 'Task was successfully created.'
+         visit user_path(edit_user)
+         expect(page).to have_selector 'td', text: new_task.title
         end
       end
     end
