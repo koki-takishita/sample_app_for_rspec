@@ -7,6 +7,11 @@ RSpec.feature "Users", type: :system do
     # 登録済みのメールアドレスが必要なため
     let!(:other_user)  { create(:user, email: 'other@co.jp') }
     let(:other_user2)  { build(:user, email: 'other@co.jp') }
+    after do |example|
+      unless example.metadata[:skip_after]
+        expect(page).to have_current_path '/users'
+      end
+    end
     describe 'ユーザー新規登録' do
       before do
         visit root_path 
@@ -15,7 +20,7 @@ RSpec.feature "Users", type: :system do
         fill_in 'Password confirmation', with: user.password_confirmation
       end
       context 'フォームの入力値が正常' do
-        it 'ユーザーの新規作成が成功する' do
+        it 'ユーザーの新規作成が成功する', :skip_after do
           fill_in 'Email', with: user.email
           click_button 'SignUp'
           # expect(response).to redirect_to 'login_path'
@@ -41,9 +46,10 @@ RSpec.feature "Users", type: :system do
     end
     describe 'マイページ' do
       context 'ログインしていない状態' do
-        it 'マイページへのアクセスが失敗する' do
+        it 'マイページへのアクセスが失敗する', :skip_after do
           visit users_path
           expect(page).to have_content 'Login required' 
+          expect(page).to have_current_path login_path
         end
       end
     end
@@ -54,6 +60,11 @@ RSpec.feature "Users", type: :system do
     let(:new_task) { build(:task) }
     before do
       sign_in_as edit_user
+    end
+    after do |example|
+      unless example.metadata[:skip_after]
+        expect(page).to have_current_path current_url
+      end
     end
     describe 'ユーザー編集' do
       context 'フォームの入力値が正常' do
