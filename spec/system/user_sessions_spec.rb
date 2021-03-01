@@ -11,12 +11,8 @@ RSpec.feature "UserSessions", type: :system do
     let(:user) { create(:user)}
     context 'フォームの入力値が正常' do
       it 'ログイン処理が成功する' do
-        #fill_in 'Email', with: user.email
-        #fill_in 'Password', with: 'password'
-        #click_button 'Login'
         sign_in_as user
         expect(page).to have_content 'Login successful'
-        # root_path
       end
     end
     context 'フォームが未入力' do

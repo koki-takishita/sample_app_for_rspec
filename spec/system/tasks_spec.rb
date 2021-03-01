@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "Tasks", type: :system do
- #before do
- #  driven_by(:rack_test)
- #end
   describe 'ログイン前' do
     let(:task) { create(:task) }
     # 特定のテストのみafter処理をスキップ
@@ -80,14 +77,9 @@ RSpec.describe "Tasks", type: :system do
         it 'タスクの新規作成が失敗する' do
           click_link 'New task'
           fill_in 'Title', with: task.title
-          # 実験用
-          # fill_in 'Content', with: " "
           click_button 'Create Task'
           expect(page).to have_content "Content can't be blank"
           expect(page).to have_selector "#task_title[value=#{task.title}]"
-          # expect(page).to have_selector '#task_content', text: '' 
-          # 実験用
-          # expect(page).to have_selector '#task_content', text: " " 
         end
       end
     end

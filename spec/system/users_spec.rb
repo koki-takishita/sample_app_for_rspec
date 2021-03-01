@@ -1,5 +1,4 @@
 require 'rails_helper'
-#:focus => true
 
 RSpec.feature "Users", type: :system do
   describe 'ログイン前' do
@@ -23,7 +22,6 @@ RSpec.feature "Users", type: :system do
         it 'ユーザーの新規作成が成功する', :skip_after do
           fill_in 'Email', with: user.email
           click_button 'SignUp'
-          # expect(response).to redirect_to 'login_path'
           expect(page).to have_content 'User was successfully created.'
           expect(page).to have_selector 'h1', text: 'Login' 
         end
@@ -38,8 +36,6 @@ RSpec.feature "Users", type: :system do
         it 'ユーザーの新規作成が失敗する' do
           fill_in 'Email', with: other_user2.email
           click_button 'SignUp'
-          # save_and_open_page
-          # expect(ather_user
           expect(page).to have_content 'Email has already been taken'
         end
       end
