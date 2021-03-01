@@ -7,7 +7,3 @@ module LoginSupport
     click_button 'Login'
   end
 end
-# Rspe設定に読み込ませる
-RSpec.configure do |config|
-  config.include LoginSupport
-end
