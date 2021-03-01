@@ -32,7 +32,7 @@ RSpec.describe "Tasks", type: :system do
   end
   describe 'ログイン後' do
     let(:user) { create(:user) }
-    let(:ather_user_task) { create(:task, user: ather_user) }
+    let(:another_user_task) { create(:task, user: another_user) }
     before do
       sign_in_as user
     end
@@ -72,7 +72,6 @@ RSpec.describe "Tasks", type: :system do
           click_link 'New task'
           fill_in 'Title', with: 'new task'
           click_button 'Create Task'
-          save_and_open_page
           expect(page).to have_content "Content can't be blank"
           # have_contentではうまく動かないためselectorで指定
           expect(page).to have_selector "input[value='new task']"
@@ -81,7 +80,7 @@ RSpec.describe "Tasks", type: :system do
     end
     describe 'タスクの編集' do
       let!(:task) { create(:task, user: user) }
-      let!(:ather_user_task) { create(:task) }
+      let!(:another_user_task) { create(:task) }
       before do
         click_link 'Task list'
         click_link 'Edit'
@@ -121,7 +120,7 @@ RSpec.describe "Tasks", type: :system do
       end
       context 'ほかユーザーの編集ページにアクセス' do
         it 'タスクの編集ページへのアクセスが失敗する', :skip_after do
-          visit edit_task_path(ather_user_task)
+          visit edit_task_path(another_user_task)
           expect(page).to have_content 'Forbidden access.'
           expect(page).to have_current_path root_path
         end
