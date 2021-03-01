@@ -22,9 +22,7 @@ RSpec.feature "UserSessions", type: :system do
   end
   describe 'ログイン後' do
     let(:logged_in_user) { create(:user) }
-    
     before { sign_in_as logged_in_user }
-
     context 'ログアウトボタンをクリック' do
       it 'ログアウト処理が成功する' do
         click_link 'Logout'
