@@ -5,7 +5,6 @@ RSpec.feature "Users", type: :system do
     let(:user) { build(:user) }
     # 登録済みのメールアドレスが必要なため
     let!(:other_user)  { create(:user, email: 'other@example.com') }
-    let(:other_user2)  { build(:user, email: 'other@example.com') }
     describe 'ユーザー新規登録' do
       before do
         visit root_path 
@@ -30,7 +29,8 @@ RSpec.feature "Users", type: :system do
       end
       context '登録済みのメールアドレスを使用' do
         it 'ユーザーの新規作成が失敗する' do
-          fill_in 'Email', with: other_user2.email
+          not_registered_user = build(:user, email: 'other@example.com')
+          fill_in 'Email', with: not_registered_user.email
           click_button 'SignUp'
           expect(page).to have_content 'Email has already been taken'
           expect(page).to have_current_path '/users'
