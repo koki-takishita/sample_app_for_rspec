@@ -2,21 +2,17 @@
 require 'rails_helper'
 
 RSpec.feature "UserSessions", type: :system do
-  after do |example|
-      unless example.metadata[:skip_after]
-        expect(page).to have_current_path root_path
-      end
-  end
   describe 'ログイン前' do
     let(:user) { create(:user)}
     context 'フォームの入力値が正常' do
       it 'ログイン処理が成功する' do
         sign_in_as user
         expect(page).to have_content 'Login successful'
+        expect(page).to have_current_path root_path
       end
     end
     context 'フォームが未入力' do
-      it 'ログイン処理が失敗する', :skip_after do
+      it 'ログイン処理が失敗する' do
         visit login_path
         click_button 'Login'
         expect(page).to have_content 'Login failed'
@@ -35,6 +31,7 @@ RSpec.feature "UserSessions", type: :system do
       it 'ログアウト処理が成功する' do
         click_link 'Logout'
         expect(page).to have_content 'Logged out'
+        expect(page).to have_current_path root_path
       end
     end
   end
