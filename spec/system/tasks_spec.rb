@@ -33,9 +33,7 @@ RSpec.describe "Tasks", type: :system do
   describe 'ログイン後' do
     let(:user) { create(:user) }
     let(:another_user_task) { create(:task, user: another_user) }
-    before do
-      sign_in_as user
-    end
+    before { sign_in_as user}
     describe 'タスク新規作成' do
       after do |example|
         unless example.metadata[:skip_after]
