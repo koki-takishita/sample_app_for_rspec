@@ -23,7 +23,7 @@ RSpec.feature "Users", type: :system do
           fill_in 'Email', with: user.email
           click_button 'SignUp'
           expect(page).to have_content 'User was successfully created.'
-          expect(page).to have_selector 'h1', text: 'Login' 
+          expect(page).to have_content 'Login' 
         end
       end
       context 'メールアドレスが未入力' do
@@ -103,7 +103,7 @@ RSpec.feature "Users", type: :system do
          click_button 'Create Task'
          expect(page).to have_content 'Task was successfully created.'
          visit user_path(edit_user)
-         expect(page).to have_selector 'td', text: new_task.title
+         expect(page).to have_content new_task.title
         end
       end
     end

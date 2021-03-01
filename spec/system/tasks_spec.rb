@@ -29,7 +29,7 @@ RSpec.describe "Tasks", type: :system do
       context 'root_pathへアクセス' do
         it 'タスクの削除ボタンがみつからない', :skip_after do
           visit root_path
-          expect(page).to_not have_selector 'a', text: 'Destroy'
+          expect(page).to_not have_content 'Destroy'
         end
       end
     end
@@ -37,7 +37,6 @@ RSpec.describe "Tasks", type: :system do
   describe 'ログイン後' do
     let(:user) { create(:user) }
     let(:task) { build(:task, user: user) }
-    #let!(:create_task) { create(:task, user: user) }
     let(:ather_user_task) { create(:task, user: ather_user) }
     before do
       sign_in_as user
@@ -48,8 +47,8 @@ RSpec.describe "Tasks", type: :system do
           expect(page).to have_current_path '/tasks'
           visit tasks_path 
           # 更新しようとしたデータが画面上に表示されてない
-          expect(page).to_not have_selector 'td', text: task.title
-          expect(page).to_not have_selector 'td', text: task.content
+          expect(page).to_not have_content task.title
+          expect(page).to_not have_content task.content
        end
       end
       context 'フォームの入力値が正常' do
@@ -59,8 +58,8 @@ RSpec.describe "Tasks", type: :system do
           fill_in 'Content', with: task.content
           click_button 'Create Task'
           expect(page).to have_content 'Task was successfully created.'
-          expect(page).to have_selector 'p', text: task.title
-          expect(page).to have_selector 'p', text: task.content
+          expect(page).to have_content task.title
+          expect(page).to have_content task.content
           expect(page).to have_current_path task_path(Task.find_by(user_id: task.user_id)) 
         end
       end
@@ -70,7 +69,7 @@ RSpec.describe "Tasks", type: :system do
           fill_in 'Content', with: task.content
           click_button 'Create Task'
           expect(page).to have_content "Title can't be blank"
-          expect(page).to have_selector '#task_content', text: task.content
+          expect(page).to have_content task.content
         end
       end
       context '内容が未入力' do
@@ -94,8 +93,8 @@ RSpec.describe "Tasks", type: :system do
         unless example.metadata[:skip_after]
           expect(page).to have_current_path "/tasks/#{task.id}"
           visit tasks_path 
-          expect(page).to_not have_selector 'td', text: 'edit_title' 
-          expect(page).to_not have_selector 'td', text: 'edit_content' 
+          expect(page).to_not have_content 'edit_title' 
+          expect(page).to_not have_content 'edit_content' 
         end
       end
       context 'フォームの入力値が正常' do
@@ -105,8 +104,8 @@ RSpec.describe "Tasks", type: :system do
           click_button 'Update Task'
           expect(page).to have_current_path task_path(task)
           expect(page).to have_content "Task was successfully updated."
-          expect(page).to have_selector 'p', text: 'edit_title'
-          expect(page).to have_selector 'p', text: 'edit_content'
+          expect(page).to have_content 'edit_title'
+          expect(page).to have_content 'edit_content'
         end
       end
       context 'タイトルが未入力' do
@@ -140,8 +139,8 @@ RSpec.describe "Tasks", type: :system do
           page.accept_confirm 'Are you sure?'
           expect(page).to have_content 'Task was successfully destroyed.'
           expect(page).to have_current_path '/tasks' 
-          expect(page).to_not have_selector 'td', text: task.title
-          expect(page).to_not have_selector 'td', text: task.content
+          expect(page).to_not have_content task.title
+          expect(page).to_not have_content task.content
         end
       end
     end
