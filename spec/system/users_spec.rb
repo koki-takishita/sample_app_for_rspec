@@ -4,8 +4,8 @@ RSpec.feature "Users", type: :system do
   describe 'ログイン前' do
     let(:user) { build(:user) }
     # 登録済みのメールアドレスが必要なため
-    let!(:other_user)  { create(:user, email: 'other@co.jp') }
-    let(:other_user2)  { build(:user, email: 'other@co.jp') }
+    let!(:other_user)  { create(:user, email: 'other@example.com') }
+    let(:other_user2)  { build(:user, email: 'other@example.com') }
     after do |example|
       unless example.metadata[:skip_after]
         expect(page).to have_current_path '/users'
