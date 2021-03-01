@@ -3,17 +3,12 @@ require 'rails_helper'
 RSpec.describe "Tasks", type: :system do
   describe 'ログイン前' do
     let(:task) { create(:task) }
-    # 特定のテストのみafter処理をスキップ
-    after do |example|
-      unless example.metadata[:skip_after]
-        expect(page).to have_current_path login_path
-      end
-    end
     describe 'タスク新規作成' do
       context '新規作成ページへアクセス' do
         it '新規作成ページへのアクセスが失敗する' do
           visit new_task_path
           expect(page).to have_content 'Login required'
+          expect(page).to have_current_path login_path
         end
       end
     end
@@ -22,12 +17,13 @@ RSpec.describe "Tasks", type: :system do
         it '編集ページへのアクセスが失敗する' do
           visit edit_task_path(task) 
           expect(page).to have_content 'Login required'
+          expect(page).to have_current_path login_path
         end
       end 
     end
     describe 'タスクの削除' do
       context 'root_pathへアクセス' do
-        it 'タスクの削除ボタンがみつからない', :skip_after do
+        it 'タスクの削除ボタンがみつからない' do
           visit root_path
           expect(page).to_not have_content 'Destroy'
         end
