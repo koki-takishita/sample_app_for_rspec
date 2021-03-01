@@ -50,7 +50,6 @@ RSpec.feature "Users", type: :system do
   describe 'ログイン後' do
     let(:registered_user) { create(:user) }
     let(:edit_user) { create(:user) }
-    let(:new_task) { build(:task) }
     before do
       sign_in_as edit_user
     end
@@ -93,6 +92,7 @@ RSpec.feature "Users", type: :system do
     describe 'マイページ' do
       context 'タスクを作成' do
         it '新規作成したタスクが表示される' do
+         new_task = build(:task)
          click_link 'New task'
          fill_in 'Title', with: new_task.title
          fill_in 'Content', with: new_task.content
